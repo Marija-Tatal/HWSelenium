@@ -1,25 +1,26 @@
-package HWClass04;
+package HW6;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.List;
 public class Task2 {
     public static void main(String[] args) throws InterruptedException {
-        System.setProperty("web-driver.chrome.driver", ".Drivers/chromedriver.exe");
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new FirefoxDriver();
         driver.manage().window().maximize();
-        driver.get("http://practice.syntaxtechs.net/basic-checkbox-demo.php");
+        driver.navigate().to("https://the-internet.herokuapp.com/iframe");
+        driver.switchTo().frame("mce_0_ifr");
+        WebElement textBox=driver.findElement(By.xpath("//body[@id='tinymce']"));
+        textBox.click();
+        textBox.clear();
+        textBox.sendKeys("Hello World!");
+        System.out.println(textBox.getText());
 
-        List<WebElement> demoBoxes = driver.findElements(By.cssSelector("input[class='cb1-element']"));
-        for (WebElement demobox : demoBoxes) {
-            String box = demobox.getAttribute("value");
-            if (box.equals("Option-4"))
-                demobox.click();
-            Thread.sleep(2000);
-            driver.quit();
+        driver.switchTo().defaultContent();
+        Thread.sleep(4000);
+        driver.quit();
 
-        }
+
     }
 }
